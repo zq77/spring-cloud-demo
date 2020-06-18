@@ -2,4 +2,4 @@
 spring cloud demo
 
 # How to run
-run com.z.SpringCloudDemoApplication
+use dev_tool.sh

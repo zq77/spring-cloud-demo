@@ -1,26 +1,34 @@
 package com.z.product.view;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.z.product.model.Product;
 
 import java.math.BigDecimal;
 
-@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+//@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class ProductView {
+    @JsonProperty("id")
     private Long id;
 
+    @JsonProperty("name")
     private String name;
 
+    @JsonProperty("price")
     private BigDecimal price;
 
+    @JsonProperty("stock")
     private Integer stock;
 
+    @JsonProperty("description")
     private String description;
 
+    @JsonProperty("icon")
     private String icon;
 
+    @JsonProperty("status")
     private String status;
 
+    @JsonProperty("category_type")
     private Integer categoryType;
 
     public static ProductView valueOf(Product product) {

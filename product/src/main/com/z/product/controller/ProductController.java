@@ -28,6 +28,6 @@ public class ProductController {
 
     @GetMapping("/404")
     public ResponseEntity<String> ret404() {
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.notFound().header("error", "test 404 not found").build();
     }
 }

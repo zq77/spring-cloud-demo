@@ -2,4 +2,4 @@
 spring cloud demo
 
 # How to run
-use dev_tool.sh
+just use dev_tool.sh

@@ -8,6 +8,7 @@ cd $root_folder
 
 function run() {
     cd $root_folder/$1
+    # mvn clean spring-boot:run
     mvn clean package
     java -jar target/*.jar
 }

@@ -6,17 +6,10 @@ set -e
 root_folder=$(cd `dirname $0`; pwd)
 cd $root_folder
 
-
-function run_eureka () {
-    cd $root_folder/eureka
+function run() {
+    cd $root_folder/$1
     mvn clean package
-    java -jar target/eureka*.jar
-}
-
-function run_eureka_client () {
-    cd $root_folder/eureka-clent
-    mvn clean package
-    java -jar target/eureka*.jar
+    java -jar target/*.jar
 }
 
 # add new cmd entry here 
@@ -27,6 +20,10 @@ run_eureka \
 
 run_eureka_client \ 
 
+run_product \
+
+run_order \ 
+
 ) 
 
 function do_command () { 
@@ -34,11 +31,19 @@ function do_command () {
     case $1 in 
 
         run_eureka) 
-            run_eureka 
+            run eureka 
             ;; 
 
         run_eureka_client) 
-            run_eureka_client 
+            run eureka-client 
+            ;; 
+        
+        run_product) 
+            run product 
+            ;; 
+
+        run_order) 
+            run order 
             ;; 
 
         *) 

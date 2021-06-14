@@ -10,7 +10,8 @@ import javax.persistence.Id;
 
 @Entity
 public class Order extends Mixin {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
     private String buyerName;

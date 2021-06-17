@@ -3,15 +3,20 @@ package com.z.order.model;
 import com.z.order.enums.OrderStatus;
 import com.z.order.enums.PayStatus;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+// "order" is keyword in db, so need append []
+@Table(name = "[order]")
 public class Order extends Mixin {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String buyerName;

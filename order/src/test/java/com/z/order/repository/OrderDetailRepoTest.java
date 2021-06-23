@@ -2,6 +2,7 @@ package com.z.order.repository;
 
 
 import com.z.order.OrderApplicationTests;
+import com.z.order.model.Order;
 import com.z.order.model.OrderDetail;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.AssertionErrors;
@@ -17,7 +18,9 @@ public class OrderDetailRepoTest extends OrderApplicationTests {
     @Test
     public void testSave() {
         OrderDetail detail = new OrderDetail();
-        detail.setOrderId(1L);
+        Order order = new Order();
+        order.setId(1L);
+        detail.setOrder(order);
         detail.setProductId(1L);
         detail.setProductIcon("icon");
         detail.setProductName("product");

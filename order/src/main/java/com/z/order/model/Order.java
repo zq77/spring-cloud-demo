@@ -3,13 +3,15 @@ package com.z.order.model;
 import com.z.order.enums.OrderStatus;
 import com.z.order.enums.PayStatus;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 // "order" is keyword in db, so need append []
@@ -34,6 +36,9 @@ public class Order extends Mixin {
 
     @Enumerated
     private PayStatus payStatus;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    private List<OrderDetail> details;
 
     public Long getId() {
         return id;

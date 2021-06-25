@@ -75,4 +75,36 @@ public class ProductView {
     public void setCategoryType(Integer categoryType) {
         this.categoryType = categoryType;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Integer getStock() {
+        return stock;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Integer getCategoryType() {
+        return categoryType;
+    }
 }

@@ -4,6 +4,8 @@ import com.z.product.services.ProductService;
 import com.z.product.view.ProductView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,6 +22,15 @@ public class ProductController {
     @GetMapping("")
     public ResponseEntity<List<ProductView>> list() {
         List<ProductView> list = productService.findUpAll().stream().map(ProductView::valueOf).collect(Collectors.toList());
+        if (list.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(list);
+    }
+
+    @PostMapping("/byIds")
+    public ResponseEntity<List<ProductView>> listByIds(@RequestBody List<Long> ids) {
+        List<ProductView> list = productService.findList(ids).stream().map(ProductView::valueOf).collect(Collectors.toList());
         if (list.isEmpty()) {
             return ResponseEntity.noContent().build();
         }

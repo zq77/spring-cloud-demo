@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 public class ResponseUtil {
 
 
+    public static ResponseEntity ok() {
+        return success();
+    }
+
     public static ResponseEntity success(Object obj) {
         return ResponseEntity.ok().body(JsonUtil.toJson(obj));
     }

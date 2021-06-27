@@ -24,6 +24,6 @@ public class OrderController {
             return ResponseUtil.validationError(bindingResult.getFieldErrors());
         }
         OrderView result = orderService.create(orderView);
-        return ResponseUtil.success();
+        return ResponseUtil.success(result);
     }
 }

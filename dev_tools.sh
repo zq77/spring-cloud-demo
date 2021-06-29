@@ -8,9 +8,18 @@ cd $root_folder
 
 function run() {
     cd $root_folder/$1
-    # mvn clean spring-boot:run
-    mvn clean package
-    java -jar target/*.jar
+    mvn clean spring-boot:run
+    # mvn clean package
+    # java -jar target/*.jar
+}
+
+function run_with_multi_module() {
+    cd $root_folder/$1
+    # install depended module
+    mvn -U clean install
+    cd $2
+    # run project
+    mvn clean spring-boot:run 
 }
 
 # add new cmd entry here 
@@ -23,7 +32,11 @@ run_eureka_client \
 
 run_product \
 
+run_product_quick \
+
 run_order \ 
+
+run_order_quick \ 
 
 ) 
 
@@ -40,11 +53,19 @@ function do_command () {
             ;; 
         
         run_product) 
-            run product 
+            run_with_multi_module product server
+            ;; 
+
+        run_product_quick) 
+            run product/server
             ;; 
 
         run_order) 
-            run order 
+            run_with_multi_module order server
+            ;; 
+
+        run_order_quick) 
+            run order/server
             ;; 
 
         *) 

@@ -22,6 +22,11 @@ function run_with_multi_module() {
     mvn clean spring-boot:run 
 }
 
+function run_rabbitmq() {
+    cd $root_folder
+    docker-compose -f ./docker-compose.yml up -d rabbitmq
+}
+
 # add new cmd entry here 
 
 cmds=( \ 
@@ -38,11 +43,17 @@ run_order \
 
 run_order_quick \ 
 
+run_rabbitmq
+
 ) 
 
 function do_command () { 
 
     case $1 in 
+
+        run_rabbitmq)
+            run_rabbitmq
+            ;;
 
         run_eureka) 
             run eureka 

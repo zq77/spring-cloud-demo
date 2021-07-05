@@ -5,4 +5,4 @@ spring cloud demo
 just use dev_tool.sh
 
 # How to request rabbitmq management page
-localhost:15672
+localhost:15672 (admin/admin)

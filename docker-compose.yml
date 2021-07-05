@@ -4,6 +4,9 @@ services:
     image: rabbitmq:3.8-management
     container_name: rabbitmq
     hostname: my_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
     ports:
         # server port
       - "5672:5672"

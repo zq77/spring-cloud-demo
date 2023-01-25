@@ -1,9 +1,11 @@
 package com.z.order.controller;
 
 import com.google.common.collect.Lists;
+import com.z.order.config.ApplicationConfig;
 import com.z.order.util.ResponseUtil;
 import com.z.product.client.ProductApi;
 import com.z.product.common.ProductView;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,22 @@ public class TestController {
 
     @Resource
     private ProductApi productApi;
+
+    @Resource
+    private ApplicationConfig config;
+
+    @Value("${app.env}")
+    private String env;
+
+    @GetMapping("/env")
+    public String env() {
+        return env;
+    }
+
+    @GetMapping("/config")
+    public String config() {
+        return "ENV: " + config.getEnv() + " NAME: " + config.getName();
+    }
 
     @GetMapping("/get_proudct_msg")
     public String getMsgFormProductServer() {

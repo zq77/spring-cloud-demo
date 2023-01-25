@@ -13,7 +13,17 @@ spring:
           username: z13903417792@163.com
           password: zq123456
           basedir: /home/zhou/workspaces/spring-cloud-demo/config/repo
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: admin
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

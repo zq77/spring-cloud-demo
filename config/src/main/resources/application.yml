@@ -10,8 +10,8 @@ spring:
       server:
         git:
           uri: https://e.coding.net/bucket-z/spring-cloud-demo/config-repo.git
-          username: ${username}
-          password: ${password}
+          username: z13903417792@163.com
+          password: zq123456
           basedir: /home/zhou/workspaces/spring-cloud-demo/config/repo
 eureka:
   client:

@@ -9,8 +9,8 @@ cd $root_folder
 function run() {
     cd $root_folder/$1
     mvn clean spring-boot:run
-    # mvn clean package
-    # java -jar target/*.jar
+#     mvn clean package
+#     java -jar target/*.jar
 }
 
 function run_with_multi_module() {
@@ -32,6 +32,8 @@ function run_rabbitmq() {
 cmds=( \ 
 
 run_eureka \ 
+
+run_config \
 
 run_eureka_client \ 
 
@@ -63,6 +65,10 @@ function do_command () {
             run eureka-client 
             ;; 
         
+        run_config)
+            run config
+            ;;
+
         run_product) 
             run_with_multi_module product server
             ;; 

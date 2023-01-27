@@ -7,3 +7,14 @@ spring:
         enabled: true
         service-id: CONFIG
       profile: dev
+    stream:
+      bindings:
+        myStreamInput-in-0:
+          destination: MyStreamExchange
+          group: prod
+        myStream-out-0:
+          destination: MyStreamExchange
+          group: prod
+    # 多组消费者需要进行function定义配置
+    function:
+      definition: myStreamInput

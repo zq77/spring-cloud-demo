@@ -14,6 +14,8 @@ public class MqSender extends ProductApplicationTests {
 
     @Test
     public void testSend() {
-        amqpTemplate.convertAndSend("MyQueue", "test MQ2");
+//        amqpTemplate.convertAndSend("MyQueue", "test MQ2");
+//        amqpTemplate.convertAndSend("MyExchange", "A", "test MQ A");
+        amqpTemplate.convertAndSend("MyExchange", "B", "test MQ B");
     }
 }

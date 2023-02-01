@@ -12,7 +12,7 @@ spring:
         myStreamInput-in-0:
           destination: MyStreamExchange
           group: prod
-        myStream-out-0:
+        myStreamOutput-out-0:
           destination: MyStreamExchange
           group: prod
     # 多组消费者需要进行function定义配置

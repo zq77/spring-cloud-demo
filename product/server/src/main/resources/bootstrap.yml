@@ -15,6 +15,9 @@ spring:
         myStreamOutput-out-0:
           destination: MyStreamExchange
           group: prod
+        product-out-0:
+          destination: productInfo
+          group: z
     # 多组消费者需要进行function定义配置
     function:
       definition: myStreamInput

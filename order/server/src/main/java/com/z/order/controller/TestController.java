@@ -76,7 +76,7 @@ public class TestController {
 
         // fail
 //        productApi.buy(Lists.newArrayList(new ProductView(1L, 2), new ProductView(223L, 1)));
-        productApi.buy(Lists.newArrayList(new ProductView(1L, 1000), new ProductView(2L, 1)));
+        productApi.buy(Lists.newArrayList(new ProductView(1L, 1), new ProductView(2L, 1)));
         return ResponseUtil.success();
     }
 }

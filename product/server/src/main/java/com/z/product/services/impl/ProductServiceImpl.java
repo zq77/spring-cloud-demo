@@ -7,10 +7,12 @@ import com.z.product.model.Product;
 import com.z.product.repository.ProductRepo;
 import com.z.product.services.ProductService;
 import com.z.product.view.ProductView;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +20,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Resource
     private ProductRepo productRepo;
+    @Resource
+    private StreamBridge streamBridge;
 
     @Override
     public List<Product> findUpAll() {
@@ -32,6 +36,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public void decreaseStock(List<ProductView> productViews) {
+        List<ProductView> newResult = new ArrayList<>();
         productViews.forEach(prod -> {
             Optional<Product> productOptional = productRepo.findById(prod.getId());
             if (!productOptional.isPresent()) {
@@ -43,6 +48,9 @@ public class ProductServiceImpl implements ProductService {
             }
             productOptional.get().setStock(result);
             productRepo.save(productOptional.get());
+            newResult.add(ProductView.valueOf(productOptional.get()));
         });
+        // send MQ message
+        streamBridge.send("product-out-0", newResult);
     }
 }

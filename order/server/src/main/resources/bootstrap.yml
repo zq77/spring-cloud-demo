@@ -1,9 +1,19 @@
 spring:
   application:
     name: order
+  redis:
+    host: localhost
+    port: 6379
   cloud:
     config:
       discovery:
         enabled: true
         service-id: CONFIG
       profile: dev
+    stream:
+      bindings:
+        decreaseProductStock-in-0:
+          destination: productInfo
+          group: z
+    function:
+      definition: decreaseProductStock

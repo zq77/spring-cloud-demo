@@ -9,7 +9,7 @@ cd $root_folder
 function run() {
     cd $root_folder/$1
     mvn clean spring-boot:run
-#     mvn clean package
+    # mvn clean package
 #     java -jar target/*.jar
 }
 
@@ -44,6 +44,8 @@ run_product_quick \
 run_order \ 
 
 run_order_quick \ 
+
+run_api_gateway \ 
 
 run_rabbitmq
 
@@ -84,6 +86,10 @@ function do_command () {
         run_order_quick) 
             run order/server
             ;; 
+
+        run_api_gateway)
+            run api-gateway
+            ;;
 
         *) 
 

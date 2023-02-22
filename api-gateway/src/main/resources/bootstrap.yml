@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: dev
+#    gateway:
+#      routes:
+#        - id: product-route
+#          uri: lb://product
+#          predicates:
+#            - Path=/products/**
+#
+#        - id: config-route
+#          uri: lb://config
+#          predicates:
+#            - Path=/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

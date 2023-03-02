@@ -7,6 +7,11 @@ spring:
         enabled: true
         service-id: CONFIG
       profile: dev
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
 #    gateway:
 #      routes:
 #        - id: product-route

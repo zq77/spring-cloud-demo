@@ -1,5 +1,7 @@
 package com.z.apigateway;
 
+import com.z.apigateway.filter.RequestTimeFilter;
+import com.z.apigateway.filter.TokenFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.route.RouteLocator;
@@ -18,9 +20,15 @@ public class ApiGatewayApplication {
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("config_route", r -> r.path("/**.yml").uri("lb://config"))
-                .route("config_route", r -> r.path("/products**", "/api/**").uri("lb://product"))
-                .route("order_route", r -> r.path("/**").uri("lb://order"))
+                .route("config_route", r -> r.path("/**.yml")
+                        .filters(f -> f.filter(new RequestTimeFilter())).uri("lb://config"))
+//                .route("config_route", r -> r.path("/products**", "/api/**").uri("lb://product"))
+//                .route("order_route", r -> r.path("/**").uri("lb://order"))
                 .build();
+    }
+
+    @Bean
+    public TokenFilter tokenFilter(){
+        return new TokenFilter();
     }
 }

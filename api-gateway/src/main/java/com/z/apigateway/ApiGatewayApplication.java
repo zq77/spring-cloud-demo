@@ -1,5 +1,6 @@
 package com.z.apigateway;
 
+import com.z.apigateway.filter.RateLimitFilter;
 import com.z.apigateway.filter.RequestTimeFilter;
 import com.z.apigateway.filter.TokenFilter;
 import org.springframework.boot.SpringApplication;
@@ -30,5 +31,10 @@ public class ApiGatewayApplication {
     @Bean
     public TokenFilter tokenFilter(){
         return new TokenFilter();
+    }
+
+    @Bean
+    public RateLimitFilter rateLimitFilter(){
+        return new RateLimitFilter();
     }
 }

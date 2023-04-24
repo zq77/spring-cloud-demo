@@ -1,5 +1,6 @@
 package com.z.apigateway;
 
+import com.z.apigateway.filter.AuthFilter;
 import com.z.apigateway.filter.RateLimitFilter;
 import com.z.apigateway.filter.RequestTimeFilter;
 import com.z.apigateway.filter.TokenFilter;
@@ -28,13 +29,18 @@ public class ApiGatewayApplication {
                 .build();
     }
 
-    @Bean
-    public TokenFilter tokenFilter(){
-        return new TokenFilter();
-    }
+//    @Bean
+//    public TokenFilter tokenFilter(){
+//        return new TokenFilter();
+//    }
 
     @Bean
     public RateLimitFilter rateLimitFilter(){
         return new RateLimitFilter();
+    }
+
+    @Bean
+    public AuthFilter authFilter(){
+        return new AuthFilter();
     }
 }

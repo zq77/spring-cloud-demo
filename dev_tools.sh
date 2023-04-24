@@ -35,6 +35,8 @@ run_eureka \
 
 run_config \
 
+run_api_gateway \ 
+
 run_eureka_client \ 
 
 run_product \
@@ -45,7 +47,9 @@ run_order \
 
 run_order_quick \ 
 
-run_api_gateway \ 
+run_user \
+
+run_user_quick \
 
 run_rabbitmq
 
@@ -85,6 +89,14 @@ function do_command () {
 
         run_order_quick) 
             run order/server
+            ;; 
+
+        run_user) 
+            run_with_multi_module user server
+            ;; 
+
+        run_user_quick) 
+            run user/server
             ;; 
 
         run_api_gateway)

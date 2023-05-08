@@ -23,6 +23,6 @@ public class CookieUtil {
     }
 
     public static String get(HttpServletRequest request, String name) {
-        return Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals(name)).map(Cookie::getValue).findFirst().orElse("");
+        return Arrays.stream(request.getCookies()).filter(cookie -> cookie.getName().equals(name)).map(Cookie::getValue).findFirst().orElse(null);
     }
 }

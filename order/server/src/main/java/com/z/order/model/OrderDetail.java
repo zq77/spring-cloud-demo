@@ -1,5 +1,6 @@
 package com.z.order.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +18,9 @@ public class OrderDetail extends Mixin {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
+
+    @Column(name = "order_id", insertable = false, updatable = false)
+    private Long orderId;
 
     private Long productId;
 
@@ -46,6 +50,10 @@ public class OrderDetail extends Mixin {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public Long getProductId() {

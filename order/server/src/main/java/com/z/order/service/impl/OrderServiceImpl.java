@@ -1,5 +1,7 @@
 package com.z.order.service.impl;
 
+import com.z.order.enums.OrderStatus;
+import com.z.order.exception.OrderException;
 import com.z.order.model.Order;
 import com.z.order.model.OrderDetail;
 import com.z.order.repository.OrderDetailRepo;
@@ -11,11 +13,13 @@ import com.z.product.client.ProductApi;
 import com.z.product.common.ProductView;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -59,5 +63,27 @@ public class OrderServiceImpl implements OrderService {
 
         productApi.buy(view.getItems().stream().map(i -> new ProductView(i.getProductId(), i.getProductQuantity())).collect(Collectors.toList()));
         return OrderView.toView(order);
+    }
+
+    @Override
+    @Transactional
+    public OrderView finish(Long orderId) {
+        Optional<Order> orderOptional = orderRepo.findById(orderId);
+        if (!orderOptional.isPresent()) {
+            throw new OrderException(OrderException.NOT_FOUND);
+        }
+
+        if (orderOptional.get().getOrderStatus() != OrderStatus.NEW) {
+            throw new OrderException(OrderException.ORDER_STATUS_ERROR);
+        }
+        orderOptional.get().setOrderStatus(OrderStatus.COMPLETED);
+        orderRepo.save(orderOptional.get());
+        List<OrderDetail> details = orderDetailRepo.findByOrderId(orderId);
+        if (CollectionUtils.isEmpty(details)) {
+            throw new OrderException(OrderException.ORDER_DETAIL_EMPTY);
+        }
+        OrderView orderView = OrderView.toView(orderOptional.get());
+        orderView.setItems(details.stream().map(OrderDetailView::toView).collect(Collectors.toList()));
+        return orderView;
     }
 }

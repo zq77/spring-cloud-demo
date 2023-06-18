@@ -18,4 +18,9 @@ Content-Type: application/json
       }
     ]
 }
+
+PUT http://localhost:8010/api/orders/finish
+Content-Type: application/x-www-form-urlencoded
+
+orderId=xxx
 ```

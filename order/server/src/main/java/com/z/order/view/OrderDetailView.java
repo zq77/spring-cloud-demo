@@ -8,6 +8,7 @@ import java.util.Date;
 
 public class OrderDetailView {
 
+    private Long Id;
     @NotBlank(message = "Product is not blank")
     private Long productId;
     @NotBlank(message = "Quantity is not blank")
@@ -24,6 +25,22 @@ public class OrderDetailView {
         detail.setProductId(this.getProductId());
         detail.setProductQuantity(this.getProductQuantity());
         return detail;
+    }
+
+    public static OrderDetailView toView(OrderDetail detail) {
+        OrderDetailView view = new OrderDetailView();
+        view.setId(detail.getId());
+        view.setProductId(detail.getProductId());
+        view.setProductQuantity(detail.getProductQuantity());
+        return view;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public Long getProductId() {

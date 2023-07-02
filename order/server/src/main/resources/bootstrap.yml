@@ -17,3 +17,14 @@ spring:
           group: z
     function:
       definition: decreaseProductStock
+feign:
+  circuitbreaker:
+    enabled: true
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: localhost
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

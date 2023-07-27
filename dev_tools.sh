@@ -27,6 +27,11 @@ function run_rabbitmq() {
     docker-compose -f ./docker-compose.yml up -d rabbitmq
 }
 
+function run_zipkin() {
+    cd $root_folder
+    docker-compose -f ./docker-compose.yml up -d zipkin
+}
+
 # add new cmd entry here 
 
 cmds=( \ 
@@ -51,7 +56,9 @@ run_user \
 
 run_user_quick \
 
-run_rabbitmq
+run_rabbitmq \
+
+run_zipkin
 
 ) 
 
@@ -61,6 +68,10 @@ function do_command () {
 
         run_rabbitmq)
             run_rabbitmq
+            ;;
+
+        run_zipkin)
+            run_zipkin
             ;;
 
         run_eureka) 

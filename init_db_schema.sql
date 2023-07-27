@@ -1,3 +1,5 @@
+CREATE DATABASE product CHARACTER SET UTF8;
+
 create table `product_category` (
     `id` int(20) not null auto_increment,
     `name` varchar(64) not null comment '类目名字',

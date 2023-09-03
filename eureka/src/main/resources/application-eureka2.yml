@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Eureka
+server:
+  port: 8762
+eureka:
+#  server:
+#    enable-self-preservation: false
+  client:
+    service-url:
+      defaultZone: http://eureka1:8761/eureka/
+#    fetch-registry: false   #表示自己就是注册中心，职责是维护服务实例，并不需要去检索服务
+#    register-with-eureka: false  #表识不向注册中心注册自己

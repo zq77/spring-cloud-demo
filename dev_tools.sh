@@ -32,6 +32,10 @@ function run_zipkin() {
     docker-compose -f ./docker-compose.yml up -d zipkin
 }
 
+function run_rancher_server() {
+    docker run --privileged -d --restart=unless-stopped -p 7780:80 -p 7443:443 rancher/rancher:stable
+}
+
 # add new cmd entry here 
 
 cmds=( \ 
@@ -58,7 +62,8 @@ run_user_quick \
 
 run_rabbitmq \
 
-run_zipkin
+run_zipkin \
+run_rancher_server
 
 ) 
 
@@ -72,6 +77,10 @@ function do_command () {
 
         run_zipkin)
             run_zipkin
+            ;;
+
+        run_rancher_server)
+            run_rancher_server
             ;;
 
         run_eureka) 

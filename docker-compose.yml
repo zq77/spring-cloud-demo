@@ -21,3 +21,39 @@ services:
     #   RABBITMQ_DEFAULT_PASS: admin
     ports:
       - "9411:9411"
+  eureka1:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/eureka
+    container_name: eureka1
+    networks:
+      cloud-network:
+        aliases:
+          - eureka1
+    environment:
+      spring.profiles.active: eureka1
+    ports:
+      - "8761:8761"
+  eureka2:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/eureka
+    container_name: eureka2
+    networks:
+      cloud-network:
+        aliases:
+          - eureka2
+    environment:
+      spring.profiles.active: eureka2
+    ports:
+      - "8762:8762"
+  config:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/config
+    container_name: config
+    networks:
+      cloud-network:
+        aliases:
+          - config
+    environment:
+      spring.profiles.active: prod
+    ports:
+      - "8020:8080"
+networks:
+  cloud-network:
+    driver: bridge

@@ -2,31 +2,34 @@ namespace=z_q
 registry=registry.cn-hangzhou.aliyuncs.com
 
 function build_eureka () {
-    cd eureka 
-    mvn clean package
-    docker_file=DockerFile
-
-    tag=${registry}/${namespace}/eureka
-
-    context_path=.
-
-    docker build --force-rm \
-         -f ${docker_file} \
-         -t ${tag} \
-         ${context_path}
-
-    docker push ${tag}
+    cd eureka
+    sh ./build.sh
 }
 
+function build_config () {
+    cd config 
+    sh ./build.sh
+}
 
 function run_eureka () {
-    docker run -p "8762:8761" -dt registry.cn-hangzhou.aliyuncs.com/z_q/eureka
+    docker-compose -f ./docker-compose.yml up -d eureka1
+    docker-compose -f ./docker-compose.yml up -d eureka2
+    # docker run --name=eureka1 -p "8761:8761" --env spring.profiles.active=eureka1 --link eureka2:eureka2 \
+    #  -dt registry.cn-hangzhou.aliyuncs.com/z_q/eureka
+    # docker run --name=eureka2 -p "8762:8761" --env spring.profiles.active=eureka2 --link eureka1:eureka1 \
+    #  -dt registry.cn-hangzhou.aliyuncs.com/z_q/eureka
+}
+
+function run_config () {
+    docker-compose -f ./docker-compose.yml up -d config
 }
 
 cmds=( \
 
 run_eureka \
-build_eureka
+run_config \
+build_eureka \
+build_config
 
 )
 
@@ -34,12 +37,20 @@ function do_command () {
 
     case $1 in
 
-       run_eureka)
-           run_eureka
-           ;;
+        run_eureka)
+            run_eureka
+            ;;
+
+        run_config)
+            run_config
+            ;;
 
         build_eureka)
             build_eureka
+            ;;
+            
+        build_config)
+            build_config
             ;;
 
         *)

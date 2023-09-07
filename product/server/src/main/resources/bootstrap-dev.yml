@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: product
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: dev
+    stream:
+      bindings:
+        myStreamInput-in-0:
+          destination: MyStreamExchange
+          group: prod
+        myStreamOutput-out-0:
+          destination: MyStreamExchange
+          group: prod
+        product-out-0:
+          destination: productInfo
+          group: z
+    # 多组消费者需要进行function定义配置
+    function:
+      definition: myStreamInput
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

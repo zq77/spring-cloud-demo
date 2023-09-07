@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: order
+  redis:
+    host: redis
+    port: 6379
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: CONFIG
+      profile: prod
+    stream:
+      bindings:
+        decreaseProductStock-in-0:
+          destination: productInfo
+          group: z
+    function:
+      definition: decreaseProductStock
+  zipkin:
+    base-url: http://zipkin:9411/
+feign:
+  circuitbreaker:
+    enabled: true
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: localhost
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka1:8761/eureka/, http://eureka2:8762/eureka/
+  instance:
+    prefer-ip-address: true

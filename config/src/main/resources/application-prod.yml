@@ -14,7 +14,7 @@ spring:
           password: zq123456
           basedir: /home/zhou/workspaces/spring-cloud-demo/config/repo
   rabbitmq:
-    host: my_rabbitmq
+    host: rabbitmq
     port: 5672
     username: admin
     password: admin

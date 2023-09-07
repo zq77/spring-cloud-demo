@@ -4,6 +4,10 @@ services:
     image: rabbitmq:3.8-management
     container_name: rabbitmq
     hostname: my_rabbitmq
+    networks:
+      cloud-network:
+        aliases:
+          - rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: admin
       RABBITMQ_DEFAULT_PASS: admin
@@ -12,13 +16,45 @@ services:
       - "5672:5672"
     #   management page port
       - "15672:15672"
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    networks:
+      cloud-network:
+        aliases:
+          - mariadb
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      TZ: Asia/shanghai
+    volumes:
+      - /opt/docker/data/marina/my.cnf:/etc/mysql/my.cnf
+      - /opt/docker/data/marina:/var/lib/mysql
+    ports:
+      - "3306:3306"
+  redis:
+    image: redis:latest
+    container_name: redis
+    networks:
+      cloud-network:
+        aliases:
+          - redis
+    command: ["redis-server", "/etc/redis/redis.conf"]
+    volumes:
+#        ro 表示容器对该文件只读, 默认是rw 可读写
+        - /opt/docker/data/redis/redis.conf:/etc/redis/redis.conf:ro
+        - /opt/docker/data/redis/data:/data
+        - /opt/docker/data/redis/logs:/logs
+    ports:
+        - "6379:6379"
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
-    # hostname: my_rabbitmq
-    # environment:
-    #   RABBITMQ_DEFAULT_USER: admin
-    #   RABBITMQ_DEFAULT_PASS: admin
+    networks:
+      cloud-network:
+        aliases:
+          - zipkin
     ports:
       - "9411:9411"
   eureka1:
@@ -54,6 +90,50 @@ services:
       spring.profiles.active: prod
     ports:
       - "8020:8080"
+  api-gateway:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/api-gateway
+    container_name: api-gateway
+    networks:
+      cloud-network:
+        aliases:
+          - api-gateway
+    environment:
+      spring.profiles.active: prod
+    ports:
+      - "8080:8080"
+  product:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/product
+    container_name: product
+    networks:
+      cloud-network:
+        aliases:
+          - product
+    environment:
+      spring.profiles.active: prod
+    ports:
+      - "8000:8080"
+  order:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/order
+    container_name: order
+    networks:
+      cloud-network:
+        aliases:
+          - order
+    environment:
+      spring.profiles.active: prod
+    ports:
+      - "8010:8080"
+  user:
+    image: registry.cn-hangzhou.aliyuncs.com/z_q/user
+    container_name: user
+    networks:
+      cloud-network:
+        aliases:
+          - user
+    environment:
+      spring.profiles.active: prod
+    ports:
+      - "8030:8080"
 networks:
   cloud-network:
     driver: bridge

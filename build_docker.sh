@@ -1,30 +1,19 @@
 namespace=z_q
 registry=registry.cn-hangzhou.aliyuncs.com
 
-function run_eureka () {
-    docker-compose -f ./docker-compose.yml up -d eureka1
-    docker-compose -f ./docker-compose.yml up -d eureka2
-    # docker run --name=eureka1 -p "8761:8761" --env spring.profiles.active=eureka1 --link eureka2:eureka2 \
-    #  -dt registry.cn-hangzhou.aliyuncs.com/z_q/eureka
-    # docker run --name=eureka2 -p "8762:8761" --env spring.profiles.active=eureka2 --link eureka1:eureka1 \
-    #  -dt registry.cn-hangzhou.aliyuncs.com/z_q/eureka
-}
-
-function run () {
-    docker-compose -f ./docker-compose.yml up -d $1
+function build () {
+    cd $1
+    sh ./build.sh
 }
 
 cmds=( \
 
-run_rabbitmq \
-run_mariadb \
-run_redis \
-run_eureka \
-run_config \
-run_api_gateway \
-run_product \
-run_order \
-run_user
+build_eureka \
+build_config \
+build_api_gateway \
+build_product \
+build_order \
+build_user
 
 )
 
@@ -32,40 +21,28 @@ function do_command () {
 
     case $1 in
 
-        run_rabbitmq)
-            run rabbitmq
-            ;;
-        
-        run_mariadb)
-            run mariadb
-            ;;
-        
-        run_redis)
-            run redis
+        build_order)
+            build order
             ;;
 
-        run_eureka)
-            run_eureka
+        build_api_gateway)
+            build api-gateway
             ;;
 
-        run_config)
-            run config
-            ;;
-        
-        run_product)
-            run product
-            ;;
-
-        run_api_gateway)
-            run api-gateway
+        build_eureka)
+            build eureka
             ;;
             
-        run_order)
-            run order
+        build_config)
+            build config
             ;;
 
-        run_user)
-            run user
+        build_product)
+            build product
+            ;;
+
+        build_user)
+            build user
             ;;
 
         *)
